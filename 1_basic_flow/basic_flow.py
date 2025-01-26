@@ -1,13 +1,12 @@
 from crewai.flow.flow import Flow, listen, start
-from dotenv import load_dotenv
 from litellm import completion
 import os
 
-load_dotenv()
+os.environ['GROQ_API_KEY'] = "" # add your GROQ key here
 
 class ExampleFlow(Flow):
-    gemini_api_key = os.environ['GEMINI_API_KEY']
-    model = "gemini-1.5-flash"
+
+    model = "groq/llama3-8b-8192"
 
     @start()
     def generate_city(self):
@@ -15,7 +14,7 @@ class ExampleFlow(Flow):
 
         response = completion(
             model=self.model,
-            api_key=self.gemini_api_key,
+
             messages=[
                 {
                     "role": "user",
@@ -33,7 +32,7 @@ class ExampleFlow(Flow):
         print("Received random city:", random_city)
         response = completion(
             model=self.model,
-            api_key=self.gemini_api_key,
+            # api_key=self.gemini_api_key,
             messages=[
                 {
                     "role": "user",
